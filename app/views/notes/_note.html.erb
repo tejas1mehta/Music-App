@@ -1,0 +1,4 @@
+<h3> <%= note.user.email %> </h3>
+<%= button_to "Delete", track_note_url(@track, note), :method => "delete" %>
+
+<p> <%= note.body_text%> </p>

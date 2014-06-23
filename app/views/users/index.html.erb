@@ -1,0 +1,20 @@
+<h1> Users </h1>
+
+<table>
+  <tr>
+    <th> Email </th>
+    <th> Admin</th>
+    <th> Toggle Admin status </th>
+  </tr>
+  <% @users.each do |user|%>
+    <tr>
+      <td><%=user.email%> </td>
+      <td><%= user.admin %> </td>
+      <td><%= button_to "Toggle Admin status", user_toggleboolean_url(user), params: {user_change: user.id}, method: "get" %> </td>
+    </tr>
+    <br>
+  <% end%>
+</table>
+<% if admin_log_in? %>
+  <p><%= button_to "Create new track", new_track_url %></p>
+<%end%>

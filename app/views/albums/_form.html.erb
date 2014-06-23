@@ -1,0 +1,52 @@
+<% if action == :new_album %>
+  <% send_url = band_albums_url%>
+  <% submit_button = "Create Album"%>
+<%else%>
+  <% send_url = edit_album_url%>
+  <% submit_button = "Update Album" %>
+<% end%>
+
+
+<form action='<%= send_url %>' method= "POST">
+  <%= auth_token_html %>
+
+  <% if action == :update_album%>
+    <input type="hidden" value="PATCH" name="_method" >
+  <%end%>
+
+  <label for="album_name">Name</label>
+  <input type="text" name="album[name]" id="album_name" value="<%=@album.name%>">
+  <br>
+
+  <label for="album_band_id"> Band </label>
+  <!-- dropdown -->
+  <select name="album[band_id]" id="album_band_id" value=<%=@album.band_id%>>
+    <!-- `brown`, if selected, is the value that will be submitted to
+         the server; user is displayed "Brown" as the choice -->
+    <% @bands.each do |band| %>
+      <% if band.id == params["band_id"].to_i %>
+        <option value="<%=band.id%>" selected = "selected"><%= band.name.capitalize%></option>
+      <%else%>
+        <option value="<%=band.id%>"><%=band.name.capitalize%></option>
+      <%end%>
+    <%end%>
+  </select>
+  <br>
+
+  <label for="album_album_kind"> Band Type </label>
+  <select name="album[album_kind]" id="album_album_kind" value=<%=@album.album_kind%>>
+    <!-- `brown`, if selected, is the value that will be submitted to
+         the server; user is displayed "Brown" as the choice -->
+    <%types = ["live", "studio"] %>
+    <% types.each do |type| %>
+      <% if type == @album.album_kind %>
+        <option value=<%=type%> selected = "selected"><%=type.capitalize%></option>
+      <%else%>
+        <option value="<%=type%>"><%=type.capitalize%></option>
+      <%end%>
+    <%end%>
+  </select>
+  <br>
+
+  <input type="submit" value = '<%=submit_button%>' >
+</form>

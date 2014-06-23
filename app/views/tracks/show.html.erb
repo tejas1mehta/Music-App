@@ -1,0 +1,22 @@
+<h1> <%= @track.name%> <h1>
+<%if current_user.admin %>
+  <%= button_to "Delete", track_url(@track), :method => "delete" %>
+<% end%>
+<h2> <%= link_to @track.album.name, album_url(@track.album) %> </h2>
+<h2> <%= link_to @track.band.name, band_url(@track.band) %> </h2>
+
+<p> type: <%= @track.track_kind%> </p>
+<p> lyrics: <%= @track.lyrics%> </p>
+
+<form action='<%= track_notes_url(@track) %>' method= "POST">
+  <%= auth_token_html %>
+
+  <label for="note_body_text">Note</label>
+  <textarea name="note[body_text]" id="note_body_text">
+  </textarea>
+  <br>
+
+  <input type="submit" value = 'Submit' >
+</form>
+<h2> Notes </h2>
+<%= render @track.notes %>

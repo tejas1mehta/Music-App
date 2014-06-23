@@ -1,0 +1,17 @@
+<h1> <%= @album.name%> <h1>
+<% if admin_log_in? %>
+    <%= button_to "Delete", album_url(@album), :method => "delete" %>
+  <% end%>
+
+<h2> <%= link_to @album.band.name, band_url(@album.band) %> </h2>
+<p> <%= @album.album_kind%> </p>
+
+
+<h2>Tracks<h2>
+    <ul>
+    <% @album.tracks.each do |track| %>
+       <li><%= link_to track.name, track_url(track) %> </li>
+    <% end %>
+    </ul>
+</ol>
+
